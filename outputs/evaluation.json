@@ -1,0 +1,14 @@
+{
+  "metrics": {
+    "accuracy": 0.8062,
+    "f1": 0.8169,
+    "precision": 0.7871,
+    "recall": 0.8491
+  },
+  "drift": {
+    "drift_detected": false,
+    "ks_statistic": 0.0,
+    "p_value": 1.0
+  },
+  "promotion_gate": "PASSED"
+}
