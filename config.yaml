@@ -1,0 +1,18 @@
+aws:
+  region: us-east-1
+  bucket: ml-pipeline-aws-yy9
+  model_prefix: models/
+  data_prefix: data/
+
+mlflow:
+  experiment_name: sentiment-classifier
+  model_name: sentiment-model
+  tracking_uri: mlruns
+
+model:
+  max_features: 50000
+  C: 1.0
+  max_iter: 1000
+
+evaluation:
+  accuracy_threshold: 0.80
