@@ -33,7 +33,7 @@ flowchart LR
     G --> H[Deploy to EC2]
     H --> I[Live API Endpoint]
 ```
-
+>Pipeline runs automatically on push to main. EC2 deployment step requires AWS credentials - see RUNBOOK.md for deployment instructions.
 ---
 
 ## What this pipeline does
