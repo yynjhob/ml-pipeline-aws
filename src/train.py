@@ -12,6 +12,7 @@ from datasets import load_dataset
 from sklearn.pipeline import Pipeline
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
+import pandas as pd
 from sklearn.metrics import (
     accuracy_score, f1_score,
     precision_score, recall_score
@@ -27,10 +28,19 @@ def load_config(path="config.yaml"):
 
 
 def load_data():
-    logger.info("Loading SST-2 dataset...")
-    dataset = load_dataset("glue", "sst2")
-    train = dataset["train"].to_pandas()[["sentence", "label"]].dropna()
-    val = dataset["validation"].to_pandas()[["sentence", "label"]].dropna()
+    import io
+    logger.info("Loading SST-2 dataset from S3...")
+    config = load_config()
+    s3 = boto3.client("s3", region_name=config["aws"]["region"])
+    bucket = config["aws"]["bucket"]
+
+    train_obj = s3.get_object(Bucket=bucket, Key="data/train.csv")
+    val_obj   = s3.get_object(Bucket=bucket, Key="data/val.csv")
+
+    train = pd.read_csv(io.BytesIO(train_obj["Body"].read()))
+    val   = pd.read_csv(io.BytesIO(val_obj["Body"].read()))
+
+    logger.info(f"Loaded {len(train)} train and {len(val)} val samples")
     return train, val
 
 
